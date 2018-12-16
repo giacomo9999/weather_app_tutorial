@@ -1,32 +1,34 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { LightningBolt } from '../assets/lightning.svg';
-import { RadioButtonSection } from '../Components/index';
-import { setLocationTextInput, setLocationRadioInput,
-  setDefaultInput } from '../../store/actions/index';
+import { LightningBolt } from "../assets/lightning.svg";
+import { RadioButtonSection } from "../Components/index";
+import {
+  setLocationTextInput,
+  setLocationRadioInput,
+  setDefaultInput
+} from "../../store/actions/index";
 
 const radioButtons = [
   {
-    value: 'name',
-    radioButtonLabel: 'City name',
+    value: "name",
+    radioButtonLabel: "City name"
   },
   {
-    value: 'id',
-    radioButtonLabel: 'City Id',
+    value: "id",
+    radioButtonLabel: "City Id"
   },
   {
-    value: 'coordinates',
-    radioButtonLabel: 'City co-ordinates',
+    value: "coordinates",
+    radioButtonLabel: "City co-ordinates"
   },
   {
-    value: 'zipcode',
-    radioButtonLabel: 'City zipcode',
-  },
+    value: "zipcode",
+    radioButtonLabel: "City zipcode"
+  }
 ];
 
 export class Home extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -34,48 +36,55 @@ export class Home extends React.Component {
     this.inputFieldRef = React.createRef();
   }
 
-  handleRadioInputChange = (event) => {
-    this.props.actions.setLocationRadioInput({ locationType: event.target.value });
-  }
+  handleRadioInputChange = event => {
+    this.props.actions.setLocationRadioInput({
+      locationType: event.target.value
+    });
+  };
 
-  handleButtonClick = (event) => {
-    this.props.actions.setLocationTextInput({ locationData: this.inputFieldRef.current.value });
-  }
+  handleButtonClick = event => {
+    this.props.actions.setLocationTextInput({
+      locationData: this.inputFieldRef.current.value
+    });
+  };
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = prevProps => {
     const { locationData, locationType } = this.props;
 
     if (prevProps.locationData !== locationData) {
       this.props.history.push({
-        pathname: '/current-weather',
+        pathname: "/current-weather",
         state: {
           locationType: locationType,
-          locationData: locationData,
-        },
+          locationData: locationData
+        }
       });
     }
-  }
+  };
 
   render() {
     return (
       <div>
-        <div className='header'>
-          <h2>Weather Forcast</h2>
-          <img src={LightningBolt} alt='lightning bolt'/>
+        <div className="header">
+          <h2>Weather Forecast</h2>
+          <img src={LightningBolt} alt="lightning bolt" />
         </div>
         <div className="instructions">
-          <p>Enter a US zipcode below to get the current weather conditions for that area.</p>
+          <p>
+            Enter a US zipcode below to get the current weather conditions for
+            that area.
+          </p>
         </div>
-        <div className='zipcodeInput'>
+        <div className="zipcodeInput">
           <input
             ref={this.inputFieldRef}
-            type='text'
-            placeholder='Enter zipcode..'
-            name='zipcode'
+            type="text"
+            placeholder="Enter zipcode.."
+            name="zipcode"
           />
           <button onClick={this.handleButtonClick}>ENTER</button>
         </div>
-        <div className='radio-button-section'>
+        <div className="radio-button-section">
           <RadioButtonSection
             radioButtons={radioButtons}
             selectedOption={this.props.locationType}
@@ -85,7 +94,7 @@ export class Home extends React.Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = function(state) {
   const locationData = state && state.locationData;
@@ -93,7 +102,7 @@ const mapStateToProps = function(state) {
 
   return {
     locationType: locationType,
-    locationData: locationData,
+    locationData: locationData
   };
 };
 
@@ -107,12 +116,15 @@ const mapDispatchToProps = function(dispatch) {
     },
     setDefaultInput: function() {
       dispatch(setDefaultInput());
-    },
+    }
   };
 
   return {
-    actions: dispatchActions,
+    actions: dispatchActions
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
