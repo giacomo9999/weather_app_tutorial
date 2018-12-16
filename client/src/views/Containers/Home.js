@@ -61,7 +61,7 @@ export class Home extends React.Component {
       <div>
         <div className='header'>
           <h2>Weather Forcast</h2>
-          <img src={LightningBolt}/>
+          <img src={LightningBolt} alt='lightning bolt'/>
         </div>
         <div className="instructions">
           <p>Enter a US zipcode below to get the current weather conditions for that area.</p>
